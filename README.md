@@ -2,7 +2,6 @@
 
 Repository for Computational Physics
 
-This repository is for the Computational Physics course by Prof. Cai from Wuhan University in the spring semester of 2016. 
 ---
 标签：Wuhan University
 

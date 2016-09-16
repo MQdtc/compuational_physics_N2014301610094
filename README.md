@@ -17,4 +17,4 @@ This repository is for the Computational Physics course by Prof. Cai from Wuhan 
 | Exercise Number      |  Task Name   |  Done or Not  |
 | :--------:   | :-----:  | :----:  |
 | Exercise 1  |   Install python  |  Done  |
-| Exercise 2  |   A simple Python Program  | Done |
+| Exercise 2  |   [ simple Python Program](https://github.com/HenryWang96/compuational_physics_N2014301610094/blob/master/Task%201%20A%20simple%20python%20program) | Done |

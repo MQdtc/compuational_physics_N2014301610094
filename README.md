@@ -19,4 +19,4 @@ This repository is for the Computational Physics course by Prof. Cai from Wuhan 
 | TASK 1  |   Install python  |  Done  |
 | TASK 2  |   [ simple Python Program](https://github.com/HenryWang96/compuational_physics_N2014301610094/blob/master/Task%201%20A%20simple%20python%20program) | Done |
 |TASK 3| [Let your name move in the screen and rotate something](https://www.zybuluo.com/whu/note/511306) |   Done|
-|...To be continued|
+|To be continued|...|...|

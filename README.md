@@ -1,10 +1,10 @@
 #computational_physics_N2014301610094
 
-Repository for Computational Physics in WHU
+##Repository for Computational Physics in WHU
 
 ---
 
-**汪恒 2014301610094 弘毅班**
+*汪恒 2014301610094 弘毅班*
 
 ---
 **Brief Introduction**

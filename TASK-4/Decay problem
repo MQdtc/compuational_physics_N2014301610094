@@ -1,0 +1,57 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Oct 06 22:59:06 2016
+
+@author: WH
+"""
+
+import numpy as np
+import matplotlib.pyplot as pl
+number_A = input("please input the initial number of nuclei A: ")
+number_B = input("please input the initial number of nuclei B: ")
+time_C = input("please input the time constant tau: ")
+time_D = input("please input the time of duration: ")
+time_S = input("please input the time step: ")
+
+class uranium_decay:
+     def __init__(self, number_of_nuclei_A = number_A, number_of_nuclei_B = number_B, time_constant = time_C, time_of_duration = time_D, time_step = time_S):
+         self.N_A = [number_of_nuclei_A]
+         self.N_B = [number_of_nuclei_B]
+         self.t = [0]
+         self.tau = time_constant
+         self.dt = time_step
+         self.time = time_of_duration
+         self.nsteps = int(time_of_duration // time_step + 1)
+         print("Initial number of nuclei A ->",number_of_nuclei_A)
+         print("Initial number of nuclei B ->",number_of_nuclei_B)
+         print("time_constant ->",time_constant)
+         print("time_step ->",time_step)
+         print("total time ->", time_of_duration)
+         
+     def calculate(self):
+         for i in range(self.nsteps):
+             tmp_A = self.N_A[i] + (self.N_B[i] / self.tau -self.N_A[i] / self.tau )* self.dt
+             tmp_B = self.N_B[i] + (self.N_A[i] / self.tau -self.N_B[i] / self.tau )* self.dt
+             self.N_A.append(tmp_A)
+             self.N_B.append(tmp_B)
+             self.t.append(self.t[i] + self.dt)
+             
+     def show_results(self):
+         pl.plot(self.t, self.N_A, label = "NA-time_step=0.05")
+         pl.plot(self.t, self.N_B, label = "NB-time_step=0.05")
+         pl.xlabel('time($s$)')
+         pl.ylabel('Number of Nuclei')
+         t = np.linspace(0, 10, 10000)  
+         NA_analytic = (self.N_A[0] + self.N_B[0]) / 2 + 0.5 * (self.N_A[0] - self.N_B[0]) * np.exp(-2 / self.tau * t)
+         NB_analytic = (self.N_A[0] + self.N_B[0]) / 2 - 0.5 * (self.N_A[0] - self.N_B[0]) * np.exp(-2 / self.tau * t)
+         pl.plot(t, NA_analytic,  label = "theoretical value of $N_{A}$")
+         pl.plot(t, NB_analytic,  label = "theoretical value of $N_{B}$")
+         pl.legend()
+         pl.show
+      
+    
+             
+a = uranium_decay()
+a.calculate()
+a.show_results()
+ 

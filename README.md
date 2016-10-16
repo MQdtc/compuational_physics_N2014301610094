@@ -20,4 +20,5 @@ This repository is for the Computational Physics course by Prof. Cai from Wuhan 
 | TASK 2  |   [ Simple Python Program---To print your name in the screen](https://github.com/HenryWang96/compuational_physics_N2014301610094/blob/master/Task%201%20A%20simple%20python%20program) | Done |
 |TASK 3| [Let your name move in the screen and rotate something](https://www.zybuluo.com/whu/note/511306) | Done|
 |TASK 4| [Improved Decay Problem](https://www.zybuluo.com/whu/note/494059)| Done |
+|TASK 5| [Realistic projectile motion--Model the behavior of the pingpong](https://www.zybuluo.com/whu/note/533389)| Done |
 |To be continued|...|...|

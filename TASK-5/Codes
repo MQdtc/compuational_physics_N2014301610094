@@ -1,0 +1,77 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Oct 15 22:23:29 2016
+'
+@author: WH
+"""
+import numpy as np
+import matplotlib.pyplot as pl
+import math
+print("Take the edge of the table as the origin of coordinates")
+x0 = input("please input the initial x position you hit the ball:")
+y0 = input("please input the initial y position you hit the ball:")
+v0 = input("please input the initial velocity: ")
+theta = input("please input the projectile angle: ")
+omega_0 = input("please input the initial angular velocity: ")
+time_D = input("please input the time of duration: ")
+time_S = input("please input the time step: ")
+vx = v0*math.cos(theta*math.pi/180)
+vy = v0*math.sin(theta*math.pi/180)
+x_0=x0
+y_0=y0
+class pingpong:
+     def __init__(self, x=x_0,y=y_0,velocity_x= vx, velocity_y=vy, time_of_duration = time_D, time_step = time_S):
+         self.x = [x]
+         self.y = [y]
+         self.v_x = [velocity_x]
+         self.v_y = [velocity_y]
+         self.t = [0]
+         self.dt = time_step
+         self.time = time_of_duration
+         self.nsteps = int(time_of_duration // time_step + 1)
+         print("velocity ->",v0)
+         print("projectile angle->",theta)
+         print("Angular velocity ->",omega_0)
+         print("time_step ->",time_step)
+         print("total time ->", time_of_duration)
+     def calculate(self):
+         for i in range(self.nsteps):
+             x_t = self.x[i]+self.v_x[i]*self.dt
+             vx = self.v_x[i]-(0.15*(self.v_x[i])+0.04*omega_0*self.v_y[i])*self.dt
+             y_t = self.y[i]+self.v_y[i]*self.dt
+             vy = self.v_y[i]-(0.15*(self.v_y[i])-0.04*omega_0*self.v_x[i]+9.8)*self.dt
+             if y_t<0.76:
+                 break
+             self.x.append(x_t)
+             self.v_x.append(vx)
+             self.y.append(y_t)
+             self.v_y.append(vy)
+             self.t.append(self.t[i] + self.dt)  
+     def show_results(self):
+         pl.subplot(3,1,1)
+         pl.plot(self.x, self.y, 'b--', label = "trajectory")
+         yw = np.linspace(0.75,0.91) 
+         xw = np.linspace(1.37,1.37)
+         yh = np.linspace(0.76,0.76)
+         xh = np.linspace(0,2.74)
+         pl.plot(x0,y0,'p')
+         pl.plot(xw, yw,'p')
+         pl.plot(xh, yh,'p')
+         pl.xlabel('X(m)')
+         pl.ylabel('Y(m)')
+         pl.legend(loc='upper right')
+         pl.subplot(3,1,2)
+         pl.plot(self.t, self.v_x, 'r',label = "Vx-t")
+         pl.xlabel("time(s)")
+         pl.ylabel("Vx(m/s)")
+         pl.legend(loc='upper right')
+         pl.subplot(3,1,3)
+         pl.plot(self.t, self.v_y, label = "Vy-t")
+         pl.xlabel("time(s)")
+         pl.ylabel("Vy(m/s)")
+         pl.legend(loc='upper right')
+      
+         
+a = pingpong()
+a.calculate()
+a.show_results()

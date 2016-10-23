@@ -1,0 +1,102 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Oct 23 21:22:42 2016
+
+@author: WH
+"""
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+# import modules
+#v_0 = input("please input the initial velocity: ")
+#theta_0 = input("please input the projectile angle: ")
+g=9.8
+B2m=0.00004
+y_zero=10000
+a=0.0065
+T0=300
+alpha=2.5
+# set constants
+class cannon0:
+    "the simplest model with no air drag, no air density variance, no probability distribution"
+    # initialize variables    
+    def __init__(self,v0,theta,yFinal=3000,xFinal=10000):
+        self.x0=0
+        self.y0=0
+        self.yFinal=yFinal
+        self.xFinal=xFinal
+        self.v0=v0
+        self.Theta=theta
+        self.theta=theta*math.pi/180
+        self.vx0=self.v0*math.cos(self.theta)
+        self.vy0=self.v0*math.sin(self.theta)
+        self.dt=0.01
+        return None
+    # external force other than gravity, no force in simplest case        
+    def F(self,vx,vy,y=1):
+        return 0,0
+    # calculate the flying trajactory
+    def fly(self):
+        self.X=[self.x0]
+        self.Y=[self.y0]
+        self.Vx=[self.vx0]
+        self.Vy=[self.vy0]
+        self.T=[0]
+        while not (self.Y[-1]<self.yFinal and self.X[-1]>self.xFinal):
+            newVx=self.Vx[-1]+self.F(vx=self.Vx[-1],vy=self.Vy[-1],y=self.Y[-1])[0]*self.dt
+            newVy=self.Vy[-1]-g*self.dt+self.F(self.Vx[-1],self.Vy[-1])[1]*self.dt
+            self.Vx.append(newVx)
+            self.Vy.append(newVy)
+            meanVx=0.5*(self.Vx[-1]+self.Vx[-2])
+            meanVy=0.5*(self.Vy[-1]+self.Vy[-2])
+#            meanV=math.sqrt(meanVx**2+meanVy**2) # not used in Cannon0 because there is no air drag
+            newX=self.X[-1]+meanVx*self.dt
+            newY=self.Y[-1]+meanVy*self.dt
+            self.X.append(newX)
+            self.Y.append(newY)
+        # fix the final landing coordinate        
+#        r=-self.Y[-2]/self.Y[-1]
+        self.X[-1]=((self.Y[-2]-self.yFinal)*self.X[-1]+(self.yFinal-self.Y[-1])*self.X[-2])/(self.Y[-2]-self.Y[-1])
+        self.Y[-1]=self.yFinal
+        return 0
+    # get the final distance shells can reach
+    def distance(self):
+        return self.X[-1]
+    def height(self):
+        return max(self.Y)
+    # represent trajectory 
+    def plot(self, color):
+        plt.plot(self.X,self.Y,color,label="$%dm/s$,$%d\degree$, no air drag"%(self.v0,self.Theta))
+        return 0
+
+class cannon(cannon0):
+    "the model concerning ADIABATIC air density variance but no probability distribution"    
+    def F(self,vx,vy,y=1):
+        vl=math.sqrt(vx**2+vy**2)
+        self.Fx=-B2m*vx*vl*(1-a*y/T0)**alpha
+        self.Fy=-B2m*vy*vl*(1-a*y/T0)**alpha
+        return self.Fx,self.Fy
+    
+
+# select the angle casting the largest distance
+
+
+D=cannon(600,40)
+D.fly()
+plt.plot(D.X,D.Y,'r-',label='$40\degree$')
+D1=cannon(600,50)
+D1.fly()
+plt.plot(D1.X,D1.Y,'b--',label='$50\degree$')
+D2=cannon(600,30)
+D2.fly()
+plt.plot(D2.X,D2.Y,'r:',label='$30\degree$') 
+plt.title('Adiabatic Air Drag')
+plt.legend(loc="upper right",frameon=False)
+yw = np.linspace(2000,2000) 
+xw = np.linspace(10000,20000)
+plt.plot(xw, yw,'p--')
+
+plt.xlabel("Distance [m]")
+plt.ylabel("Hieght [m]")   
+plt.show()
+

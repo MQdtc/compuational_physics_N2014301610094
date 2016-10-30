@@ -1,0 +1,63 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Oct 30 20:02:28 2016
+
+@author: WH
+"""
+
+import matplotlib.pyplot as pl
+import math
+
+
+class pendulum:
+     def __init__(self, theta1=0.2, theta2=0.2+0.001, omega1 = 0, omega2 = 0, Force = 1.2, omegaD= 2.0/3, time_of_duration = 6000, time_step = 0.04):
+         self.theta1 = [theta1]
+         self.theta2 = [theta2]
+         self.omega1 = [omega1]
+         self.omega2 = [omega2]
+         self.Force = [Force]
+         self.omegaD = [omegaD]
+         self.t = [0]
+         self.dt = time_step
+         self.time = time_of_duration
+         self.nsteps = int(time_of_duration // time_step + 1)
+         self.a = [abs(theta2-theta1)]
+         print("theta ->",0.2)
+         print("initial omega",theta1)
+         print("Angular velocity ->",omega1)
+         print("time_step ->",time_step)
+         print("total time ->", time_of_duration)
+     def calculate(self):
+         for i in range(self.nsteps):
+             self.omega1.append(self.omega1[i] + (-math.sin(self.theta1[i])-0.5*self.omega1[i]+self.Force[0]*math.sin(self.omegaD[0]*self.t[i]))*self.dt)           
+             self.theta1.append(self.theta1[i] + self.omega1[i+1]*self.dt)
+             if self.omega1[-1] < -math.pi:      
+                 self.omega1[-1] = self.omega1[i+1] + 2*math.pi
+             elif self.omega1[-1] > math.pi:
+                 self.omega1[-1] = self.omega1[i+1] - 2*math.pi
+             else:
+                pass
+#            
+             self.omega2.append(self.omega2[i] + (-math.sin(self.theta2[i])-0.5*self.omega2[i]+self.Force[0]*math.sin(self.omegaD[0]*self.t[i]))*self.dt)           
+             self.theta2.append(self.theta2[i] + self.omega2[i+1]*self.dt)
+             if self.omega2[i+1] < -math.pi:      
+                 self.omega2[i+1] = self.omega2[i+1] + 2*math.pi
+             elif self.omega2[i+1] > math.pi:
+                 self.omega2[i+1] = self.omega2[i+1] - 2*math.pi
+             else:
+                pass
+             self.t.append(self.t[i] + self.dt)  
+             self.a.append(abs(self.theta1[i+1]-self.theta2[i+1]))
+             
+     def show_results(self):
+         pl.plot(self.theta1, self.omega1)
+         pl.xlabel('Time ($s$)')
+         pl.ylabel('$\Delta \\theta $(radius)')
+         pl.title('$\Delta \\theta $ versus time')
+         pl.legend(loc='upper right',frameon = True)
+         pl.grid(True)        
+         pl.show()    
+        
+a = pendulum()
+a.calculate()
+a.show_results()

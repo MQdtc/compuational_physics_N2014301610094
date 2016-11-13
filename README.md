@@ -23,4 +23,5 @@ This repository is for the Computational Physics course by Prof. Cai from Wuhan 
 | TASK 5  | [Realistic projectile motion--Model the behavior of the pingpong](https://www.zybuluo.com/whu/note/533389)| Done |
 | TASK 6 | [Realistic projectile motion（II）](https://www.zybuluo.com/whu/note/541782)| Done |
 | TASK 7 | [Nonlinear pendulum---chaotic](https://www.zybuluo.com/whu/note/550280)| Done |
+| TASK 8 | [Nonlinear pendulum（II）](https://www.zybuluo.com/whu/note/565893）| Done |
 |To be continued|...|...|
